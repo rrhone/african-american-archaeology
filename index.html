@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>African American Archaeology</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="page-container">
+    <header>
+      <div class="header-inner">
+        <div class="site-title">African American Archaeology</div>
+        <nav>
+          <a href="index.html">Home</a>
+          <a href="game.html">Trivia Game</a>
+          <a href="themes.html">Sources &amp; Themes</a>
+          <a href="sources.html">Sources Cited</a>
+          <a href="results.html">Results</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="main-inner">
+        <section class="content-card">
+          <h1 class="page-heading">Centering Black Histories Through Archaeology</h1>
+          <p class="page-subtitle">
+            This site introduces African American archaeology, a field that uses
+            material remains, documents, and community knowledge to tell stories
+            that written records often silence or distort.
+          </p>
+
+          <p>
+            Archaeologists working in this tradition study homes, plantations,
+            cemeteries, military posts, and urban neighborhoods connected to
+            Black communities. They focus on everyday objects, architecture, and
+            landscapes to understand how people created family, culture, and
+            resistance under slavery and beyond.
+          </p>
+
+          <p>
+            Scan the QR code below to open the trivia game on your phone. Your
+            responses will help us talk about key themes in African American
+            archaeology as a class.
+          </p>
+
+          <div id="qrcode" style="margin-top: 1rem;"></div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      African American Archaeology Project · Fall 2025
+    </footer>
+
+    <button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
+  </div>
+
+  <!-- QRCode library + scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // TEMP while testing locally; later change text to your GitHub Pages URL
+    new QRCode(document.getElementById("qrcode"), {
+      text: "game.html",
+      width: 160,
+      height: 160
+    });
+  </script>
+</body>
+</html>

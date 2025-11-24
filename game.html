@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>African American Archaeology Trivia</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="page-container">
+    <header>
+      <div class="header-inner">
+        <div class="site-title">African American Archaeology</div>
+        <nav>
+          <a href="index.html">Home</a>
+          <a href="game.html">Trivia Game</a>
+          <a href="themes.html">Sources &amp; Themes</a>
+          <a href="sources.html">Sources Cited</a>
+          <a href="results.html">Results</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="main-inner">
+        <!-- Start screen -->
+        <section class="content-card" id="start-screen">
+          <h1 class="page-heading">Join the Trivia</h1>
+          <p class="page-subtitle">
+            Answer a short set of questions about African American archaeology.
+            Your answers will be recorded for our class discussion.
+          </p>
+          <button id="start-btn">Start Trivia</button>
+        </section>
+
+        <!-- Quiz screen -->
+        <section class="content-card" id="quiz-screen" style="display: none;">
+          <h2 class="section-heading" id="question-text"></h2>
+          <div id="options"></div>
+          <button id="next-btn" style="margin-top: 1rem;">Next</button>
+          <p id="progress" class="page-subtitle" style="margin-top: 0.75rem;"></p>
+        </section>
+
+        <!-- End screen -->
+        <section class="content-card" id="end-screen" style="display: none;">
+          <h1 class="page-heading">Thank you!</h1>
+          <p class="page-subtitle">
+            Your responses have been submitted. We will review them together in
+            class.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      African American Archaeology Project · Fall 2025
+    </footer>
+
+    <button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
+  </div>
+
+  <!-- Firebase + scripts -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

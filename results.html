@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Trivia Results</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="page-container">
+    <header>
+      <div class="header-inner">
+        <div class="site-title">African American Archaeology</div>
+        <nav>
+          <a href="index.html">Home</a>
+          <a href="game.html">Trivia Game</a>
+          <a href="themes.html">Sources &amp; Themes</a>
+          <a href="sources.html">Sources Cited</a>
+          <a href="results.html">Results</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="main-inner">
+        <section class="content-card">
+          <h1 class="page-heading">Trivia Results</h1>
+          <p class="page-subtitle">
+            These summaries show how the class answered each question. You can
+            use them to guide discussion about African American archaeology.
+          </p>
+
+          <div id="results-container">
+            <p>Loading results…</p>
+          </div>
+
+          <div style="margin-top: 1.5rem;">
+            <button onclick="window.location.href='index.html'">
+              Back to Home
+            </button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      African American Archaeology Project · Fall 2025
+    </footer>
+
+    <button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/results.js"></script>
+</body>
+</html>
