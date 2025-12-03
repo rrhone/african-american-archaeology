@@ -1,14 +1,10 @@
 // js/game.js
 
-// 1. Firebase config
-// TODO: replace the placeholder values with your actual Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyB-hS7UcA9Invcobq2GTPh6a6dBlj7L_nI",
-  authDomain: "african-american-archaeology.firebaseapp.com",
-  projectId: "african-american-archaeology",
-  storageBucket: "african-american-archaeology.firebasestorage.app",
-  messagingSenderId: "901349237762",
-  appId: "1:901349237762:web:96a08ed1c3c862d1d3b31b"
+// 1. Firebase config – put YOUR actual values here
+var firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID"
 };
 
 if (!firebase.apps.length) {
@@ -16,8 +12,7 @@ if (!firebase.apps.length) {
 }
 var db = firebase.firestore();
 
-// 2. Questions for the trivia
-// TODO: customize questions to match your readings/themes
+// 2. Questions with correctIndex for scoring
 const questions = [
   {
     id: "q1",
@@ -27,7 +22,8 @@ const questions = [
       "To center the lives and experiences of Black communities",
       "To ignore documents and only study artifacts",
       "To study only prehistoric sites"
-    ]
+    ],
+    correctIndex: 1
   },
   {
     id: "q2",
@@ -37,7 +33,8 @@ const questions = [
       "They reveal Black labor, family, and resistance under slavery",
       "They are easy to excavate",
       "They have no connection to Black history"
-    ]
+    ],
+    correctIndex: 1
   },
   {
     id: "q3",
@@ -47,34 +44,44 @@ const questions = [
       "Written records only",
       "Artifacts, landscapes, documents, and oral histories",
       "DNA evidence only"
-    ]
+    ],
+    correctIndex: 2
   }
 ];
 
 let currentIndex = 0;
 const answers = {};
 
-// Simple participant ID so each device is tracked
 const participantId = "p_" + Math.random().toString(36).substring(2, 9);
+let participantName = "";
 
 // DOM elements
 const startScreen = document.getElementById("start-screen");
 const quizScreen = document.getElementById("quiz-screen");
 const endScreen = document.getElementById("end-screen");
 const startBtn = document.getElementById("start-btn");
+const nameInput = document.getElementById("playerName");
 const questionText = document.getElementById("question-text");
 const optionsDiv = document.getElementById("options");
 const nextBtn = document.getElementById("next-btn");
 const progress = document.getElementById("progress");
 
-// Start button behavior
+// Start quiz
 startBtn.addEventListener("click", () => {
+  const name = nameInput.value.trim();
+  if (!name) {
+    alert("Please enter your first and last name to join the game.");
+    return;
+  }
+
+  participantName = name;
+
   startScreen.style.display = "none";
   quizScreen.style.display = "block";
   loadQuestion();
 });
 
-// Load the current question
+// Load current question
 function loadQuestion() {
   const q = questions[currentIndex];
   questionText.textContent = q.text;
@@ -96,10 +103,13 @@ function loadQuestion() {
     label.appendChild(document.createTextNode(opt));
     optionsDiv.appendChild(label);
   });
+
+  nextBtn.textContent =
+    currentIndex === questions.length - 1 ? "Submit answers" : "Next";
 }
 
-// Next button behavior
-nextBtn.addEventListener("click", async () => {
+// Next / Submit
+nextBtn.addEventListener("click", () => {
   const q = questions[currentIndex];
   const selected = document.querySelector("input[name='option']:checked");
 
@@ -114,29 +124,39 @@ nextBtn.addEventListener("click", async () => {
   if (currentIndex < questions.length) {
     loadQuestion();
   } else {
-    await submitAnswers();
+    // end quiz visually, then send to Firestore
     quizScreen.style.display = "none";
     endScreen.style.display = "block";
+    submitAnswers();
   }
 });
 
-// Save answers to Firestore
+// Save to Firestore
 async function submitAnswers() {
   const timestamp = new Date();
-
   const responseData = {};
   questions.forEach((q) => {
     responseData[q.id] = answers[q.id] ?? null;
   });
 
+  // compute score
+  let score = 0;
+  questions.forEach((q) => {
+    if (responseData[q.id] === q.correctIndex) {
+      score++;
+    }
+  });
+
   try {
     await db.collection("triviaResponses").add({
       participantId: participantId,
+      participantName: participantName,
       answers: responseData,
+      score: score,
       submittedAt: timestamp
     });
+    console.log("Responses saved.");
   } catch (err) {
     console.error("Error saving responses:", err);
-    // Even if error, still show thank-you screen
   }
 }

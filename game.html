@@ -9,14 +9,8 @@
   <div class="page-container">
     <header>
       <div class="header-inner">
-        <div class="site-title">African American Archaeology</div>
-        <nav>
-          <a href="index.html">Home</a>
-          <a href="game.html">Trivia Game</a>
-          <a href="themes.html">Sources &amp; Themes</a>
-          <a href="sources.html">Sources Cited</a>
-          <a href="results.html">Results</a>
-        </nav>
+        <!-- No nav links for participants -->
+        <div class="site-title">Trivia · African American Archaeology</div>
       </div>
     </header>
 
@@ -26,17 +20,45 @@
         <section class="content-card" id="start-screen">
           <h1 class="page-heading">Join the Trivia</h1>
           <p class="page-subtitle">
-            Answer a short set of questions about African American archaeology.
-            Your answers will be recorded for our class discussion.
+            Enter your name and answer a short set of questions about African American
+            archaeology. You will have 15 seconds per question. Once time is up, that
+            question is locked.
           </p>
+
+          <div style="margin-bottom: 1rem;">
+            <label for="playerName" style="display:block; margin-bottom:0.4rem;">
+              First and last name:
+            </label>
+            <input
+              id="playerName"
+              type="text"
+              placeholder="Example: Jordan Smith"
+              style="
+                width: 100%;
+                padding: 0.45rem 0.6rem;
+                border-radius: 999px;
+                border: 1px solid var(--border-soft);
+                background: #020617;
+                color: var(--text-main);
+              "
+            />
+          </div>
+
           <button id="start-btn">Start Trivia</button>
         </section>
 
         <!-- Quiz screen -->
         <section class="content-card" id="quiz-screen" style="display: none;">
           <h2 class="section-heading" id="question-text"></h2>
+
+          <p id="timer" class="page-subtitle" style="margin-bottom: 0.5rem;">
+            Time left: 15s
+          </p>
+
           <div id="options"></div>
+
           <button id="next-btn" style="margin-top: 1rem;">Next</button>
+
           <p id="progress" class="page-subtitle" style="margin-top: 0.75rem;"></p>
         </section>
 
@@ -44,8 +66,8 @@
         <section class="content-card" id="end-screen" style="display: none;">
           <h1 class="page-heading">Thank you!</h1>
           <p class="page-subtitle">
-            Your responses have been submitted. We will review them together in
-            class.
+            Your responses have been submitted. Watch the main screen to see the
+            leaderboard and how the class answered each question.
           </p>
         </section>
       </div>
