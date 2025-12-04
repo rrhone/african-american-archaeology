@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Trivia Player</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="page-container">
+    <header>
+      <div class="header-inner">
+        <div class="site-title">Trivia Player</div>
+        <!-- no nav on phones -->
+      </div>
+    </header>
+
+    <main>
+      <div class="main-inner">
+        <!-- Icon select screen -->
+        <section class="content-card" id="icon-screen">
+          <h1 class="page-heading">Choose Your Icon</h1>
+          <p class="page-subtitle">
+            Tap one icon to represent you in this game. Once an icon is claimed
+            by someone else, it is no longer available.
+          </p>
+
+          <div id="icon-grid" class="icon-grid"></div>
+
+          <p class="page-subtitle" id="icon-message" style="margin-top: 0.75rem;"></p>
+        </section>
+
+        <!-- Quiz screen -->
+        <section class="content-card" id="quiz-screen" style="display: none;">
+          <h2 class="section-heading" id="question-text"></h2>
+          <p id="timer" class="page-subtitle" style="margin-bottom: 0.5rem;">
+            Time left: 15s
+          </p>
+          <div id="options"></div>
+          <button id="next-btn" style="margin-top: 1rem;">Next</button>
+          <p id="progress" class="page-subtitle" style="margin-top: 0.75rem;"></p>
+        </section>
+
+        <!-- End screen -->
+        <section class="content-card" id="end-screen" style="display: none;">
+          <h1 class="page-heading">Thanks for Playing</h1>
+          <p class="page-subtitle">
+            Your icon’s score is now part of the game. Watch the main screen
+            to see the final ranking and discuss the answers.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer>African American Archaeology Project · Fall 2025</footer>
+    <button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
+  </div>
+
+  <!-- Firebase + scripts -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <!-- Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+  <script src="js/main.js"></script>
+  <script src="js/player.js"></script>
+</body>
+</html>

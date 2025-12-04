@@ -1,89 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>African American Archaeology Trivia</title>
-  <link rel="stylesheet" href="css/styles.css" />
-</head>
 <body>
   <div class="page-container">
     <header>
       <div class="header-inner">
-        <!-- No nav links for participants -->
-        <div class="site-title">Trivia · African American Archaeology</div>
+        <div class="site-title">African American Archaeology</div>
+        <nav>
+          <a href="index.html">Home</a>
+          <a href="game.html">Trivia Game</a>
+          <a href="themes.html">Themes</a>
+          <a href="sources.html">Sources Cited</a>
+          <a href="results.html">Results</a>
+        </nav>
       </div>
     </header>
 
     <main>
       <div class="main-inner">
-        <!-- Start screen -->
-        <section class="content-card" id="start-screen">
+        <section class="content-card">
           <h1 class="page-heading">Join the Trivia</h1>
           <p class="page-subtitle">
-            Enter your name and answer a short set of questions about African American
-            archaeology. You will have 15 seconds per question. Once time is up, that
-            question is locked.
+            Scan the QR code to join the game on your phone. Choose an anthropology
+            icon to represent you and answer each question within the time limit.
           </p>
 
-          <div style="margin-bottom: 1rem;">
-            <label for="playerName" style="display:block; margin-bottom:0.4rem;">
-              First and last name:
-            </label>
-            <input
-              id="playerName"
-              type="text"
-              placeholder="Example: Jordan Smith"
-              style="
-                width: 100%;
-                padding: 0.45rem 0.6rem;
-                border-radius: 999px;
-                border: 1px solid var(--border-soft);
-                background: #020617;
-                color: var(--text-main);
-              "
-            />
+          <p>
+            Once everyone has finished, we will switch to the results screen to see
+            which icon earned the most points and talk through the answers together.
+          </p>
+
+          <div id="qrcode" style="margin: 1.5rem auto 0; width: 220px;"></div>
+
+          <div style="margin-top: 1.75rem;">
+            <button onclick="window.location.href='results.html'">
+              Show Results
+            </button>
           </div>
-
-          <button id="start-btn">Start Trivia</button>
-        </section>
-
-        <!-- Quiz screen -->
-        <section class="content-card" id="quiz-screen" style="display: none;">
-          <h2 class="section-heading" id="question-text"></h2>
-
-          <p id="timer" class="page-subtitle" style="margin-bottom: 0.5rem;">
-            Time left: 15s
-          </p>
-
-          <div id="options"></div>
-
-          <button id="next-btn" style="margin-top: 1rem;">Next</button>
-
-          <p id="progress" class="page-subtitle" style="margin-top: 0.75rem;"></p>
-        </section>
-
-        <!-- End screen -->
-        <section class="content-card" id="end-screen" style="display: none;">
-          <h1 class="page-heading">Thank you!</h1>
-          <p class="page-subtitle">
-            Your responses have been submitted. Watch the main screen to see the
-            leaderboard and how the class answered each question.
-          </p>
         </section>
       </div>
     </main>
 
-    <footer>
-      African American Archaeology Project · Fall 2025
-    </footer>
-
+    <footer> African American Archaeology Project · Fall 2025 </footer>
     <button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
   </div>
 
-  <!-- Firebase + scripts -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <!-- QRCode library + scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/game.js"></script>
+  <script>
+    new QRCode(document.getElementById("qrcode"), {
+      text: "https://rrhone.github.io/african-american-archaeology/player.html",
+      width: 220,
+      height: 220
+    });
+  </script>
 </body>
-</html>

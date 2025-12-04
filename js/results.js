@@ -15,174 +15,218 @@ if (!firebase.apps.length) {
 }
 var db = firebase.firestore();
 
-// 2. Questions
+// 2. Icon lookup – same IDs as in player.js
+const iconLookup = {
+  mask:   { label: "Ritual Mask",   emoji: "🎭" },
+  pottery:{ label: "Ceramic Pot",   emoji: "🏺" },
+  trowel: { label: "Trowel",        emoji: "🛠️" },
+  beads:  { label: "Glass Beads",   emoji: "📿" },
+  house:  { label: "Shotgun House", emoji: "🏚️" },
+  quilt:  { label: "Story Quilt",   emoji: "🧵" }
+};
+
+// 3. Same questions as player.js, so we can compute per-question stats
 const questions = [
   {
     id: "q1",
     text: "What is a central goal of African American archaeology?",
-    options: [
-      "To focus only on elite white households",
-      "To center the lives and experiences of Black communities",
-      "To ignore documents and only study artifacts",
-      "To study only prehistoric sites"
-    ],
     correctIndex: 1
   },
   {
     id: "q2",
     text: "Why are plantation sites important in African American archaeology?",
-    options: [
-      "They only document the lives of owners",
-      "They reveal Black labor, family, and resistance under slavery",
-      "They are easy to excavate",
-      "They have no connection to Black history"
-    ],
     correctIndex: 1
   },
   {
     id: "q3",
     text: "Which of the following can be a source in African American archaeology?",
-    options: [
-      "Artifacts and architecture only",
-      "Written records only",
-      "Artifacts, landscapes, documents, and oral histories",
-      "DNA evidence only"
-    ],
     correctIndex: 2
   }
 ];
 
-const container = document.getElementById("results-container");
-const overview = document.getElementById("result-summary");
-const leaderboardRows = document.getElementById("leaderboard-rows");
+// ---------- Load and render results ----------
 
-db.collection("triviaResponses")
-  .get()
-  .then((snapshot) => {
-    const totalResponses = snapshot.size;
-    if (totalResponses === 0) {
-      overview.textContent = "No responses have been recorded yet.";
-      container.innerHTML = "";
-      leaderboardRows.innerHTML = "<p>No players have joined yet.</p>";
+async function loadResults() {
+  const leaderboardContainer = document.getElementById("leaderboard");
+  const breakdownContainer = document.getElementById("question-breakdown");
+
+  leaderboardContainer.innerHTML = "<p>Loading results…</p>";
+  breakdownContainer.innerHTML = "";
+
+  try {
+    const snap = await db.collection("triviaResponses").get();
+
+    if (snap.empty) {
+      leaderboardContainer.innerHTML =
+        "<p>No results yet. Ask participants to join the game and complete the questions.</p>";
       return;
     }
 
-    overview.textContent = `Total participants: ${totalResponses}. Each bar below shows how the class answered. Green labels mark the correct answers.`;
-
-    const counts = {};
     const players = [];
-    questions.forEach((q) => {
-      counts[q.id] = new Array(q.options.length).fill(0);
-    });
+    const stats = questions.map(() => ({ correct: 0, total: 0 }));
 
-    snapshot.forEach((doc) => {
+    snap.forEach((doc) => {
       const data = doc.data();
-      const ans = data.answers || {};
-      const name = (data.participantName || "Anonymous").trim() || "Anonymous";
+      const iconId = data.iconId || "unknown";
+      const iconInfo = iconLookup[iconId] || {
+        label: "Unknown Icon",
+        emoji: "❓"
+      };
 
-      let score = typeof data.score === "number" ? data.score : 0;
-      if (typeof data.score !== "number") {
-        questions.forEach((q) => {
-          if (ans[q.id] === q.correctIndex) score++;
-        });
-      }
+      const score = data.score || 0;
+      players.push({ iconId, iconInfo, score });
 
-      players.push({ name, score });
-
-      questions.forEach((q) => {
-        const idx = ans[q.id];
-        if (
-          idx !== undefined &&
-          idx !== null &&
-          counts[q.id][idx] !== undefined
-        ) {
-          counts[q.id][idx] += 1;
+      const answers = data.answers || {};
+      questions.forEach((q, index) => {
+        const ans = answers[q.id];
+        if (ans !== null && ans !== undefined) {
+          stats[index].total++;
+          if (ans === q.correctIndex) {
+            stats[index].correct++;
+          }
         }
       });
     });
 
-    // Leaderboard
+    // sort descending by score
     players.sort((a, b) => b.score - a.score);
-    leaderboardRows.innerHTML = "";
-    players.forEach((p, index) => {
-      const row = document.createElement("div");
-      row.className = "answer-row";
 
-      const rankLabel = document.createElement("div");
-      rankLabel.className = "answer-count";
-      rankLabel.textContent = `#${index + 1}`;
-
-      const nameLabel = document.createElement("div");
-      nameLabel.className = "answer-label";
-      nameLabel.textContent = p.name;
-
-      const scoreLabel = document.createElement("div");
-      scoreLabel.className = "answer-count";
-      scoreLabel.textContent = `${p.score} correct`;
-
-      row.appendChild(rankLabel);
-      row.appendChild(nameLabel);
-      row.appendChild(scoreLabel);
-
-      leaderboardRows.appendChild(row);
-    });
-
-    // Per-question breakdown
-    container.innerHTML = "";
-    questions.forEach((q, qi) => {
-      const section = document.createElement("div");
-      section.className = "theme-section question-result";
-
-      const title = document.createElement("h2");
-      title.className = "section-heading";
-      title.textContent = `Question ${qi + 1}: ${q.text}`;
-      section.appendChild(title);
-
-      const list = document.createElement("div");
-      const total = totalResponses;
-
-      q.options.forEach((opt, index) => {
-        const row = document.createElement("div");
-        row.className = "answer-row";
-
-        const label = document.createElement("div");
-        label.className = "answer-label";
-        if (index === q.correctIndex) {
-          label.classList.add("correct-answer");
-        }
-        label.textContent = opt;
-
-        const barOuter = document.createElement("div");
-        barOuter.className = "answer-bar";
-
-        const barFill = document.createElement("div");
-        barFill.className = "answer-bar-fill";
-
-        const count = counts[q.id][index];
-        const percent = total > 0 ? (count / total) * 100 : 0;
-        barFill.style.width = `${percent}%`;
-
-        barOuter.appendChild(barFill);
-
-        const countLabel = document.createElement("div");
-        countLabel.className = "answer-count";
-        countLabel.textContent = `${count} (${percent.toFixed(0)}%)`;
-
-        row.appendChild(label);
-        row.appendChild(barOuter);
-        row.appendChild(countLabel);
-
-        list.appendChild(row);
-      });
-
-      section.appendChild(list);
-      container.appendChild(section);
-    });
-  })
-  .catch((err) => {
+    renderLeaderboard(leaderboardContainer, players);
+    renderQuestionBreakdown(breakdownContainer, stats);
+  } catch (err) {
     console.error("Error loading results:", err);
-    overview.textContent =
-      "There was an error loading the results. Please try again later.";
-    leaderboardRows.innerHTML = "";
-    container.innerHTML = "";
+    leaderboardContainer.innerHTML =
+      "<p>There was an error loading the results. Check the console for details.</p>";
+  }
+}
+
+function renderLeaderboard(container, players) {
+  if (!players.length) {
+    container.innerHTML =
+      "<p>No results to show yet. Have participants complete the trivia.</p>";
+    return;
+  }
+
+  const maxScore = Math.max(...players.map((p) => p.score || 0)) || 1;
+
+  const list = document.createElement("ol");
+  list.className = "leaderboard-list";
+
+  players.forEach((p, index) => {
+    const li = document.createElement("li");
+    li.className = "leaderboard-item";
+
+    const rank = document.createElement("div");
+    rank.className = "leaderboard-rank";
+    rank.textContent = index + 1;
+
+    const label = document.createElement("div");
+    label.className = "leaderboard-label";
+    label.textContent = `${p.iconInfo.emoji} ${p.iconInfo.label}`;
+
+    const scoreWrap = document.createElement("div");
+    scoreWrap.className = "leaderboard-score-wrap";
+
+    const scoreText = document.createElement("span");
+    scoreText.className = "leaderboard-score-text";
+    scoreText.textContent = `${p.score} pts`;
+
+    const barOuter = document.createElement("div");
+    barOuter.className = "score-bar-outer";
+
+    const barInner = document.createElement("div");
+    barInner.className = "score-bar-inner";
+    const widthPct = (p.score / maxScore) * 100;
+    barInner.style.width = `${widthPct}%`;
+
+    barOuter.appendChild(barInner);
+    scoreWrap.appendChild(scoreText);
+    scoreWrap.appendChild(barOuter);
+
+    li.appendChild(rank);
+    li.appendChild(label);
+    li.appendChild(scoreWrap);
+    list.appendChild(li);
   });
+
+  container.innerHTML = "";
+  container.appendChild(list);
+}
+
+function renderQuestionBreakdown(container, stats) {
+  container.innerHTML = "";
+
+  questions.forEach((q, index) => {
+    const { correct, total } = stats[index];
+    const pct =
+      total === 0 ? 0 : Math.round((correct / total) * 100);
+
+    const block = document.createElement("div");
+    block.className = "question-row";
+
+    const text = document.createElement("div");
+    text.className = "question-text";
+    text.textContent = `${index + 1}. ${q.text}`;
+
+    const barOuter = document.createElement("div");
+    barOuter.className = "score-bar-outer";
+
+    const barInner = document.createElement("div");
+    barInner.className = "score-bar-inner";
+    barInner.style.width = `${pct}%`;
+
+    const label = document.createElement("span");
+    label.className = "leaderboard-score-text";
+    label.textContent = `${correct}/${total} correct (${pct}%)`;
+
+    barOuter.appendChild(barInner);
+
+    const rowBottom = document.createElement("div");
+    rowBottom.className = "question-row-bottom";
+    rowBottom.appendChild(label);
+    rowBottom.appendChild(barOuter);
+
+    block.appendChild(text);
+    block.appendChild(rowBottom);
+
+    container.appendChild(block);
+  });
+}
+
+// ---------- Reset game (clear DB) ----------
+
+async function resetGame() {
+  if (
+    !confirm(
+      "This will clear all trivia results and icon choices so you can start a new game. Continue?"
+    )
+  ) {
+    return;
+  }
+
+  try {
+    // delete triviaResponses
+    const respSnap = await db.collection("triviaResponses").get();
+    const batch = db.batch();
+    respSnap.forEach((doc) => batch.delete(doc.ref));
+    await batch.commit();
+
+    // delete iconClaims
+    const iconSnap = await db.collection("iconClaims").get();
+    const batch2 = db.batch();
+    iconSnap.forEach((doc) => batch2.delete(doc.ref));
+    await batch2.commit();
+
+    alert("Game data cleared. You can start a new round.");
+    window.location.reload();
+  } catch (err) {
+    console.error("Error resetting game:", err);
+    alert("There was an error clearing the data. Check the console.");
+  }
+}
+
+// Make resetGame available to the button in results.html
+window.resetGame = resetGame;
+
+// Load results when page is ready
+window.addEventListener("load", loadResults);

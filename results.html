@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Trivia Results</title>
+  <title>Trivia Results · African American Archaeology</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -25,52 +26,40 @@
         <section class="content-card">
           <h1 class="page-heading">Trivia Results</h1>
           <p class="page-subtitle">
-            These summaries show how the class answered each question. Use them
-            to talk about themes in African American archaeology, not just who
-            “won” the game.
+            Each icon represents a player who joined the trivia game on their phone.
+            Icons are ranked by total correct answers. Use this view to talk through
+            which questions were easier or harder for the class.
           </p>
 
-          <!-- Overview -->
-          <div id="results-meta" class="theme-section" style="margin-bottom: 1.25rem;">
-            <h2 class="section-heading">Overview</h2>
-            <p id="result-summary" class="page-subtitle">
-              Loading responses…
-            </p>
-          </div>
-
           <!-- Leaderboard -->
-          <div id="leaderboard" class="theme-section" style="margin-bottom: 1.25rem;">
-            <h2 class="section-heading">Leaderboard</h2>
-            <p class="page-subtitle">
-              Ranked by number of correct answers. Ties share the same score.
-            </p>
-            <div id="leaderboard-rows"></div>
-          </div>
+          <h2 class="section-heading" style="margin-top: 1.25rem;">Icon Ranking</h2>
+          <div id="leaderboard"></div>
 
-          <!-- Per-question breakdown -->
-          <div id="results-container"></div>
+          <!-- Question breakdown -->
+          <h2 class="section-heading" style="margin-top: 1.75rem;">Question Breakdown</h2>
+          <div id="question-breakdown"></div>
 
+          <!-- Controls -->
           <div style="margin-top: 1.75rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
-            <button onclick="window.location.href='index.html'">
+            <button type="button" onclick="window.location.href='index.html'">
               Back to Home
             </button>
-            <button onclick="window.location.href='game.html'">
-              Back to Trivia Game
+            <button type="button" onclick="resetGame()">
+              Reset Game (Clear Results)
             </button>
           </div>
         </section>
       </div>
     </main>
 
-    <footer>
-      African American Archaeology Project · Fall 2025
-    </footer>
-
+    <footer>African American Archaeology Project · Fall 2025</footer>
     <button id="scrollTopBtn" aria-label="Scroll to top">↑</button>
   </div>
 
+  <!-- Firebase + scripts -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
   <script src="js/main.js"></script>
   <script src="js/results.js"></script>
 </body>
