@@ -443,8 +443,10 @@ footer {
 
 .score-bar-inner {
   height: 100%;
-  border-radius: 999px;
   background: linear-gradient(90deg, #f97316, #facc15);
+  border-radius: 999px;
+  width: 0;                       /* start collapsed */
+  transition: width 0.8s ease-out; /* animate width changes */
 }
 
 /* Question breakdown */
@@ -577,18 +579,4 @@ footer {
 .leaderboard-score-text {
   font-size: 1rem;
   font-weight: 600;
-}
-
-.score-bar-outer {
-  width: 100%;
-  height: 0.45rem;
-  border-radius: 999px;
-  background: #111827;
-  border: 1px solid #1f2937;
-  overflow: hidden;
-}
-
-.score-bar-inner {
-  height: 100%;
-  background: linear-gradient(90deg, #f97316, #facc15);
 }

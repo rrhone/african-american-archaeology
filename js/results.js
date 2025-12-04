@@ -144,8 +144,15 @@ function renderLeaderboard(container, players) {
 
     const barInner = document.createElement("div");
     barInner.className = "score-bar-inner";
-    barInner.style.width = `${(p.score / maxScore) * 100}%`;
     barOuter.appendChild(barInner);
+
+    // compute target width
+    const targetWidth = (p.score / maxScore) * 100;
+
+    // animate on next frame so CSS transition runs
+    requestAnimationFrame(() => {
+    barInner.style.width = `${targetWidth}%`;
+    });
 
     // Right side wrapper: score text + bar
     const rightSide = document.createElement("div");
@@ -186,7 +193,11 @@ function renderQuestionBreakdown(container, stats) {
 
     const barInner = document.createElement("div");
     barInner.className = "score-bar-inner";
+    barOuter.appendChild(barInner);
+
+    requestAnimationFrame(() => {
     barInner.style.width = `${pct}%`;
+    });
 
     const label = document.createElement("span");
     label.className = "leaderboard-score-text";
