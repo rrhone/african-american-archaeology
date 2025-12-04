@@ -15,10 +15,14 @@
 }
 
 body {
+  margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-image: url("../img/archaeology-pattern.png");
+  background-color: white;
+  background-repeat: repeat;
+  background-size: 320px 320px;
   background: var(--bg);
   color: var(--text-main);
-  min-height: 100vh;
 }
 
 .page-container {
