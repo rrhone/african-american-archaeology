@@ -1,13 +1,12 @@
 :root {
   --bg: #ffffff;                 /* full white background */
-  --card-bg: #f4f4f4;            /* soft light-gray cards */
+  --card-bg: #ffffff;            /* white cards */
   --text-main: #111111;          /* body text black */
-  --text-muted: #555555;         /* caption text dark gray */
+  --text-muted: black;         /* caption text dark gray */
   --border-soft: rgba(0,0,0,0.15); /* subtle gray borders */
   --accent: #172f67;             /* blue accent */
   --shadow-soft: 0 2px 6px rgba(0,0,0,0.15); /* soft shadow */
 }
-
 
 * {
   box-sizing: border-box;
@@ -17,7 +16,7 @@
 
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: radial-gradient(circle at top, #1f2933, #020617);
+  background: var(--bg));
   color: var(--text-main);
   min-height: 100vh;
 }
@@ -32,7 +31,7 @@ body {
 
 header {
   border-bottom: 1px solid var(--border-soft);
-  background: rgba(15, 23, 42, 0.95);
+  background: white;
   backdrop-filter: blur(8px);
 }
 
@@ -52,7 +51,7 @@ header {
 }
 
 nav a {
-  color: var(--text-muted);
+  color: var(--text-main);
   margin-left: 1rem;
   text-decoration: none;
   font-size: 0.98rem;
@@ -95,7 +94,7 @@ main {
 /* Content card */
 
 .content-card {
-  background: radial-gradient(circle at top left, white, #111827);
+  background: var(--card-bg);
   border-radius: 18px;
   padding: 1.75rem 1.5rem;
   box-shadow: var(--shadow-soft);
@@ -113,7 +112,7 @@ main {
 
 .page-subtitle {
   font-size: 1.05rem;
-  color: var(--text-muted);
+  color: var(--text-main);
   margin-bottom: 1.25rem;
 }
 
@@ -127,7 +126,7 @@ main {
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--text-muted);
+  color: var(--text-main);
   margin-bottom: 0.25rem;
 }
 
@@ -143,7 +142,7 @@ p {
 .theme-section {
   padding: 1.25rem 1rem;
   border-radius: 14px;
-  background: linear-gradient(135deg, #111827, white);
+  background: white;
   border: 1px solid var(--border-soft);
   margin-bottom: 1rem;
 }
@@ -166,8 +165,8 @@ p {
 /* Buttons */
 
 button {
-  background: radial-gradient(circle at 30% 30%, #f59e0b, #b45309);
-  color: #0b1020;
+  background: radial-gradient(circle at 30% 30%, #25537d, #172f67);
+  color: white;
   border: 1px solid var(--border-soft);
   border-radius: 999px;
   padding: 0.5rem 1.2rem;
@@ -199,8 +198,8 @@ footer {
   padding: 0.75rem 1.25rem 1.1rem;
   text-align: center;
   font-size: 0.85rem;
-  color: var(--text-muted);
-  background: rgba(15, 23, 42, 0.97);
+  color: var(--text-main);
+  background: white;
 }
 
 /* Scroll-to-top button */
@@ -213,8 +212,8 @@ footer {
   height: 42px;
   border-radius: 999px;
   border: 1px solid var(--border-soft);
-  background: radial-gradient(circle at 30% 30%, #f59e0b, #b45309);
-  color: #0b1020;
+  background: var(--accent);
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -267,7 +266,7 @@ footer {
 
 .answer-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #f59e0b, #f97316);
+  background: linear-gradient(90deg, #25537d, #172f67);
   width: 0%;
   transition: width 0.3s ease;
 }
@@ -276,7 +275,7 @@ footer {
   width: 4.5rem;
   text-align: right;
   font-size: 0.85rem;
-  color: var(--text-muted);
+  color: var(--text-main);
 }
 
 .correct-answer {
@@ -444,7 +443,7 @@ footer {
 
 .score-bar-inner {
   height: 100%;
-  background: linear-gradient(90deg, #f97316, #facc15);
+  background: linear-gradient(90deg, #25537d, #172f67);
   border-radius: 999px;
   width: 0;                       /* start collapsed */
   transition: width 0.8s ease-out; /* animate width changes */
