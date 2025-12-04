@@ -1,10 +1,13 @@
 // js/results.js
 
 // 1. Firebase config – same as in game.js
-var firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID"
+const firebaseConfig = {
+  apiKey: "AIzaSyB-hS7UcA9Invcobq2GTPh6a6dB1j7l_nI",
+  authDomain: "african-american-archaeology.firebaseapp.com",
+  projectId: "african-american-archaeology",
+  storageBucket: "african-american-archaeology.firebasestorage.app",
+  messagingSenderId: "901349237762",
+  appId: "1:901349237762:web:96a08ed1c3c862d1d3b31b"
 };
 
 if (!firebase.apps.length) {
