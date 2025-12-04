@@ -18,17 +18,6 @@ var db = firebase.firestore();
 const questions = [
   {
     id: "q1",
-    text: "What is a central goal of African American archaeology?",
-    options: [
-      "To focus only on elite white households",
-      "To center the lives and experiences of Black communities",
-      "To ignore documents and only study artifacts",
-      "To study only prehistoric sites"
-    ],
-    correctIndex: 1
-  },
-  {
-    id: "q2",
     text: "Why are plantation sites important in African American archaeology?",
     options: [
       "They only document the lives of owners",
@@ -39,7 +28,7 @@ const questions = [
     correctIndex: 1
   },
   {
-    id: "q3",
+    id: "q2",
     text: "Which of the following can be a source in African American archaeology?",
     options: [
       "Artifacts and architecture only",
@@ -48,6 +37,61 @@ const questions = [
       "DNA evidence only"
     ],
     correctIndex: 2
+  },
+  {
+    id: "q3",
+    text: "What did Maria Franklin argue about 'apolitical archaeology'?",
+    options: [
+      "It improves representation of Black communities",
+      "It is a myth that hides power and racial inequality in research",
+      "It is a neutral approach that avoids bias",
+      "It focuses solely on technological analysis"
+    ],
+    correctIndex: 1
+  },
+  {
+    id: "q4",
+    text: "Why is descendant community involvement important in African American archaeology?",
+    options: [
+      "It eliminates the need for archival records",
+      "It replaces archaeological methods entirely",
+      "It ensures interpretations reflect lived experience and community memory",
+      "It slows down research progress"
+    ],
+    correctIndex: 2
+  },
+  {
+    id: "q5",
+    text: "Which case study best highlights conflict over representation and public memory?",
+    options: [
+      "Roman Forum reconstruction",
+      "New York African Burial Ground excavation",
+      "Mayan temple architecture study",
+      "Colonial Jamestown silver trade"
+    ],
+    correctIndex: 1
+  },
+  {
+    id: "q6",
+    text: "How were historic photographs, such as the Agnes Street outhouse image, used publicly?",
+    options: [
+      "To support neutral scientific observation",
+      "To document elite wealth and architecture",
+      "To sensationalize Black neighborhoods as slums",
+      "To promote tourism"
+    ],
+    correctIndex: 2
+  },
+  {
+    id: "q7",
+    text: "What is a primary goal of community-accountable archaeology?",
+    options: [
+      "To co-produce narratives with descendants and share interpretive authority",
+      "To prioritize academic authority over local voices",
+      "To remove oral history from research",
+      "To limit access to archaeological findings"
+    ],
+    correctIndex: 0
   }
 ];
 

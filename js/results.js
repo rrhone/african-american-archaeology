@@ -31,20 +31,41 @@ const iconLookup = {
 const questions = [
   {
     id: "q1",
-    text: "What is a central goal of African American archaeology?",
-    correctIndex: 1
-  },
-  {
-    id: "q2",
     text: "Why are plantation sites important in African American archaeology?",
     correctIndex: 1
   },
   {
-    id: "q3",
+    id: "q2",
     text: "Which of the following can be a source in African American archaeology?",
     correctIndex: 2
+  },
+  {
+    id: "q3",
+    text: "What did Maria Franklin argue about 'apolitical archaeology'?",
+    correctIndex: 1
+  },
+  {
+    id: "q4",
+    text: "Why is descendant community involvement important in African American archaeology?",
+    correctIndex: 2
+  },
+  {
+    id: "q5",
+    text: "Which case study best highlights conflict over representation and public memory?",
+    correctIndex: 1
+  },
+  {
+    id: "q6",
+    text: "How were historic photographs, such as the Agnes Street outhouse image, used publicly?",
+    correctIndex: 2
+  },
+  {
+    id: "q7",
+    text: "What is a primary goal of community-accountable archaeology?",
+    correctIndex: 0
   }
 ];
+
 
 const totalQuestions = questions.length;
 
