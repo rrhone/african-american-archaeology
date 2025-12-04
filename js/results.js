@@ -46,6 +46,9 @@ const questions = [
   }
 ];
 
+const totalQuestions = questions.length;
+
+
 // ---------- Load and render results ----------
 
 async function loadResults() {
@@ -130,30 +133,30 @@ function renderLeaderboard(container, players) {
     img.alt = p.iconInfo.label;
     img.className = "leaderboard-icon";
 
-    // Score bar
+    // Score text (to the right of the icon)
+    const scoreText = document.createElement("span");
+    scoreText.className = "leaderboard-score-text";
+    scoreText.textContent = `Scored: ${p.score}/${totalQuestions}`;
+
+    // Score bar (under the score text, still on the right side)
     const barOuter = document.createElement("div");
     barOuter.className = "score-bar-outer";
 
     const barInner = document.createElement("div");
     barInner.className = "score-bar-inner";
     barInner.style.width = `${(p.score / maxScore) * 100}%`;
-
     barOuter.appendChild(barInner);
 
-    // Score number
-    const scoreText = document.createElement("span");
-    scoreText.className = "leaderboard-score-text";
-    scoreText.textContent = `${p.score}`;
+    // Right side wrapper: score text + bar
+    const rightSide = document.createElement("div");
+    rightSide.className = "leaderboard-right";
+    rightSide.appendChild(scoreText);
+    rightSide.appendChild(barOuter);
 
-    // Layout: rank | icon | score+bar
-    const scoreWrap = document.createElement("div");
-    scoreWrap.className = "leaderboard-score-wrap";
-    scoreWrap.appendChild(scoreText);
-    scoreWrap.appendChild(barOuter);
-
+    // Final layout: rank | icon | rightSide
     li.appendChild(rank);
     li.appendChild(img);
-    li.appendChild(scoreWrap);
+    li.appendChild(rightSide);
 
     list.appendChild(li);
   });
@@ -161,6 +164,7 @@ function renderLeaderboard(container, players) {
   container.innerHTML = "";
   container.appendChild(list);
 }
+
 
 function renderQuestionBreakdown(container, stats) {
   container.innerHTML = "";
