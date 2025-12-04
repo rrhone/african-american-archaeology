@@ -1,4 +1,3 @@
-// js/game.js
 
 // 1. Firebase config – replace with your real values
 const firebaseConfig = {

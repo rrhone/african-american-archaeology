@@ -1,4 +1,3 @@
-// js/results.js
 
 // 1. Firebase config – same as in game.js
 const firebaseConfig = {
@@ -17,12 +16,15 @@ var db = firebase.firestore();
 
 // 2. Icon lookup – same IDs as in player.js
 const iconLookup = {
-  mask:   { label: "Ritual Mask",   emoji: "🎭" },
-  pottery:{ label: "Ceramic Pot",   emoji: "🏺" },
-  trowel: { label: "Trowel",        emoji: "🛠️" },
-  beads:  { label: "Glass Beads",   emoji: "📿" },
-  house:  { label: "Shotgun House", emoji: "🏚️" },
-  quilt:  { label: "Story Quilt",   emoji: "🧵" }
+  goat:      { label: "Goat Figurine" },
+  camera:    { label: "Field Camera" },
+  map:       { label: "Site Map" },
+  skull:     { label: "Human Remains" },
+  vase:      { label: "Ceramic Vessel" },
+  antelope:  { label: "Animal Fauna" },
+  magnifier: { label: "Magnifying Glass" },
+  archer:    { label: "Rock Art Figure" },
+  bone:      { label: "Bone Fragment" }
 };
 
 // 3. Same questions as player.js, so we can compute per-question stats
@@ -103,49 +105,56 @@ async function loadResults() {
 function renderLeaderboard(container, players) {
   if (!players.length) {
     container.innerHTML =
-      "<p>No results to show yet. Have participants complete the trivia.</p>";
+      "<p>No results yet. Have participants complete the trivia.</p>";
     return;
   }
 
   const maxScore = Math.max(...players.map((p) => p.score || 0)) || 1;
 
+  // Create leaderboard list
   const list = document.createElement("ol");
-  list.className = "leaderboard-list";
+  list.className = "leaderboard-list icons-only";
 
   players.forEach((p, index) => {
     const li = document.createElement("li");
-    li.className = "leaderboard-item";
+    li.className = "leaderboard-item icon-only";
 
+    // Rank number
     const rank = document.createElement("div");
     rank.className = "leaderboard-rank";
     rank.textContent = index + 1;
 
-    const label = document.createElement("div");
-    label.className = "leaderboard-label";
-    label.textContent = `${p.iconInfo.emoji} ${p.iconInfo.label}`;
+    // Icon image
+    const img = document.createElement("img");
+    img.src = `img/icon-${p.iconId}.png`;
+    img.alt = p.iconInfo.label;
+    img.className = "leaderboard-icon";
 
-    const scoreWrap = document.createElement("div");
-    scoreWrap.className = "leaderboard-score-wrap";
-
-    const scoreText = document.createElement("span");
-    scoreText.className = "leaderboard-score-text";
-    scoreText.textContent = `${p.score} pts`;
-
+    // Score bar
     const barOuter = document.createElement("div");
     barOuter.className = "score-bar-outer";
 
     const barInner = document.createElement("div");
     barInner.className = "score-bar-inner";
-    const widthPct = (p.score / maxScore) * 100;
-    barInner.style.width = `${widthPct}%`;
+    barInner.style.width = `${(p.score / maxScore) * 100}%`;
 
     barOuter.appendChild(barInner);
+
+    // Score number
+    const scoreText = document.createElement("span");
+    scoreText.className = "leaderboard-score-text";
+    scoreText.textContent = `${p.score}`;
+
+    // Layout: rank | icon | score+bar
+    const scoreWrap = document.createElement("div");
+    scoreWrap.className = "leaderboard-score-wrap";
     scoreWrap.appendChild(scoreText);
     scoreWrap.appendChild(barOuter);
 
     li.appendChild(rank);
-    li.appendChild(label);
+    li.appendChild(img);
     li.appendChild(scoreWrap);
+
     list.appendChild(li);
   });
 

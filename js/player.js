@@ -1,4 +1,3 @@
-// js/player.js
 
 // 1. Firebase config – SAME as in game.js/results.js
 const firebaseConfig = {
@@ -17,12 +16,15 @@ var db = firebase.firestore();
 
 // 2. Icons players can choose from
 const icons = [
-  { id: "mask", label: "Ritual Mask", emoji: "🎭" },
-  { id: "pottery", label: "Ceramic Pot", emoji: "🏺" },
-  { id: "trowel", label: "Trowel", emoji: "🛠️" },
-  { id: "beads", label: "Glass Beads", emoji: "📿" },
-  { id: "house", label: "Shotgun House", emoji: "🏚️" },
-  { id: "quilt", label: "Story Quilt", emoji: "🧵" }
+  { id: "goat",      label: "Goat Figurine",      src: "img/icon-goat.png" },
+  { id: "camera",    label: "Field Camera",       src: "img/icon-camera.png" },
+  { id: "map",       label: "Site Map",           src: "img/icon-map.png" },
+  { id: "skull",     label: "Human Remains",      src: "img/icon-skull.png" },
+  { id: "vase",      label: "Ceramic Vessel",     src: "img/icon-vase.png" },
+  { id: "antelope",  label: "Animal Fauna",       src: "img/icon-stag.png" },
+  { id: "magnifier", label: "Magnifying Glass",   src: "img/icon-magnifier.png" },
+  { id: "archer",    label: "Rock Art Figure",    src: "img/icon-archer.png" },
+  { id: "bone",      label: "Bone Fragment",      src: "img/icon-bone.png" }
 ];
 
 const participantId = "p_" + Math.random().toString(36).substring(2, 9);
@@ -89,16 +91,30 @@ function renderIcons(taken) {
   icons.forEach((icon) => {
     const btn = document.createElement("button");
     btn.className = "icon-card";
-    btn.innerHTML = `<span class="icon-emoji">${icon.emoji}</span><span class="icon-label">${icon.label}</span>`;
+
+    const img = document.createElement("img");
+    img.src = icon.src;
+    img.alt = icon.label;
+    img.className = "icon-img";
+
+    const label = document.createElement("span");
+    label.className = "icon-label";
+    label.textContent = icon.label;
+
     const isTaken = taken.has(icon.id);
     if (isTaken) {
       btn.classList.add("icon-taken");
       btn.disabled = true;
     }
+
     btn.addEventListener("click", () => tryClaimIcon(icon.id));
+
+    btn.appendChild(img);
+    btn.appendChild(label);
     iconGrid.appendChild(btn);
   });
 }
+
 
 async function loadTakenIconsAndRender() {
   const snapshot = await db.collection("iconClaims").get();

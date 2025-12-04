@@ -463,3 +463,73 @@ footer {
   flex-direction: column;
   gap: 0.25rem;
 }
+
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.icon-card {
+  background: linear-gradient(135deg, #111827, #1f2933);
+  border-radius: 16px;
+  border: 1px solid var(--border-soft);
+  padding: 0.65rem 0.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-main);
+  font-size: 0.9rem;
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+}
+
+.icon-card:hover {
+  transform: translateY(-1px);
+}
+
+.icon-card.icon-taken {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.icon-img {
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  margin-bottom: 0.3rem;
+  object-fit: cover;
+}
+
+.icon-label {
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+/* Clickable theme headings */
+.section-heading.theme-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* Little arrow indicator */
+.section-heading.theme-toggle::after {
+  content: "▾";
+  font-size: 0.9rem;
+  margin-left: 0.4rem;
+  color: var(--text-muted);
+}
+
+/* Arrow changes when collapsed */
+.theme-section.collapsed .section-heading.theme-toggle::after {
+  content: "▸";
+}
+
+/* Hide all content inside theme-section except the heading when collapsed */
+.theme-section.collapsed > *:not(.section-heading) {
+  display: none;
+}
