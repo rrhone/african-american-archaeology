@@ -4,9 +4,10 @@
   --text-main: #111111;          /* body text black */
   --text-muted: #555555;         /* caption text dark gray */
   --border-soft: rgba(0,0,0,0.15); /* subtle gray borders */
-  --accent: #1B3A57;             /* hex blue accent */
+  --accent: #172f67;             /* blue accent */
   --shadow-soft: 0 2px 6px rgba(0,0,0,0.15); /* soft shadow */
 }
+
 
 * {
   box-sizing: border-box;
@@ -15,10 +16,11 @@
 }
 
 body {
-  background: var(--bg);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #1f2933, #020617);
   color: var(--text-main);
+  min-height: 100vh;
 }
-
 
 .page-container {
   display: flex;
@@ -30,8 +32,7 @@ body {
 
 header {
   border-bottom: 1px solid var(--border-soft);
-  background: var(--card-bg);
-  color: var(--text-main);
+  background: rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(8px);
 }
 
@@ -51,7 +52,7 @@ header {
 }
 
 nav a {
-  color: var(--text-main);
+  color: var(--text-muted);
   margin-left: 1rem;
   text-decoration: none;
   font-size: 0.98rem;
@@ -94,8 +95,11 @@ main {
 /* Content card */
 
 .content-card {
-  background: var(--card-bg);
-  color: var(--text-main);
+  background: radial-gradient(circle at top left, white, #111827);
+  border-radius: 18px;
+  padding: 1.75rem 1.5rem;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border-soft);
 }
 
 /* Text */
@@ -139,7 +143,7 @@ p {
 .theme-section {
   padding: 1.25rem 1rem;
   border-radius: 14px;
-  background: linear-gradient(135deg, #111827, #1f2933);
+  background: linear-gradient(135deg, #111827, white);
   border: 1px solid var(--border-soft);
   margin-bottom: 1rem;
 }
@@ -195,8 +199,8 @@ footer {
   padding: 0.75rem 1.25rem 1.1rem;
   text-align: center;
   font-size: 0.85rem;
-  background: var(--card-bg);
-  color: var(--text-main);
+  color: var(--text-muted);
+  background: rgba(15, 23, 42, 0.97);
 }
 
 /* Scroll-to-top button */
@@ -209,8 +213,8 @@ footer {
   height: 42px;
   border-radius: 999px;
   border: 1px solid var(--border-soft);
-  background: var(--accent);
-  color: white;
+  background: radial-gradient(circle at 30% 30%, #f59e0b, #b45309);
+  color: #0b1020;
   display: flex;
   align-items: center;
   justify-content: center;
